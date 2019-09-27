@@ -1,9 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <LangVersion>8</LangVersion>
         <Nullable>warnings</Nullable>
+
+        <PackageId>LanguageExt.Bson</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>Anno von Heimburg</Authors>
+        <Company>40three GmbH</Company>
+        <Copyright>Copyright (c) 40three GmbH. All rights reserved.</Copyright>
+        
+        <Title>LanguageExt.Bson</Title>
+        <Summary>BSON Serializers for LanguageExt</Summary>
+        <Description>Supplies MongoDB.Bson-serializers for some LanguageExt containers and collections</Description>
+        <PackageProjectUrl>https://github.com/40three/LanguageExt.Bson</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
