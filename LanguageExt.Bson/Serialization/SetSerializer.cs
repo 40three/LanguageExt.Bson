@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 namespace LanguageExt.Bson.Serialization
 {
