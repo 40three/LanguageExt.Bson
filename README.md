@@ -24,7 +24,7 @@ Supported Types
 
  Type | Serialized as
  -----|--------------
- `Option<A>` | Some as `A`, None as `BsonNull`
+ `Option<A>` | `Some<A>` as `A`, `None` as `BsonNull`
  `Lst<A>` | `BsonArray`
  `Seq<A>` | `BsonArray`
  `Set<A>` | `BsonArray`
