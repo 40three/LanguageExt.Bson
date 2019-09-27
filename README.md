@@ -1,6 +1,7 @@
 # LanguageExt.Bson
 
-This library provides BSON-serializers for MongoDB.Bson for most LanguageExt containers.
+This library provides BSON-serializers for [MongoDB.Bson](http://mongodb.github.io/mongo-csharp-driver/) for most 
+[LanguageExt](https://github.com/louthy/language-ext) containers.
 
 Nuget
 -----
