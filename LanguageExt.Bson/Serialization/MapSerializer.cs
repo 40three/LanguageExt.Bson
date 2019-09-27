@@ -1,4 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
@@ -12,31 +16,97 @@ namespace LanguageExt.Bson.Serialization
     /// <typeparam name="B"></typeparam>
     public class MapSerializer<A,B> : SerializerBase<Map<A,B>>, IBsonDictionarySerializer
     {
+
+        private const string Key = "k";
+        private const string Value = "v";
+
+        private readonly IBsonSerializer<A> _keySerializer;
+        private readonly IBsonSerializer<B> _valueSerializer;
+        
         public MapSerializer(IBsonSerializerRegistry registry)
         {
-            _dictionarySerializer = new DictionaryInterfaceImplementerSerializer<Dictionary<A, B>>(
-                DictionaryRepresentation.ArrayOfDocuments, 
-                registry.GetSerializer<A>(),
-                registry.GetSerializer<B>());
+            _keySerializer = registry.GetSerializer<A>(); 
+            _valueSerializer = registry.GetSerializer<B>();
 
         }
-
-        private readonly DictionaryInterfaceImplementerSerializer<Dictionary<A, B>> _dictionarySerializer;
-            
+        
         public override Map<A, B> Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
-            var dict = _dictionarySerializer.Deserialize(context, new BsonDeserializationArgs());
-            return new Map<A, B>(dict.Map(kv =>(kv.Key, kv.Value)));
+            var reader = context.Reader;
+
+            var keyDeserializationArgs = ArgumentHelper.GetSpecificDeserializationArgs(args);
+            var valueDeserializationArgs = ArgumentHelper.GetSpecificDeserializationArgs(args, 1);
+            
+            var accumulator = new List<ValueTuple<A,B>>();
+            
+            reader.ReadStartArray();
+
+            while (reader.ReadBsonType() != BsonType.EndOfDocument)
+            {
+                A key = default;
+                B value = default;
+
+                var keySet = false;
+                var valueSet = false;
+                
+                reader.ReadStartDocument();
+                while (reader.ReadBsonType() != BsonType.EndOfDocument)
+                {
+                    var elementName = reader.ReadName();
+                    switch (elementName)
+                    {
+                        case Key:
+                            keySet = true;
+                            key = _keySerializer.Deserialize(context, keyDeserializationArgs);
+                            break;
+                        case Value:
+                            valueSet = true;
+                            value = _valueSerializer.Deserialize(context, valueDeserializationArgs);
+                            break;
+                        default:
+                            throw new BsonSerializationException($"Unknown element name {elementName}");
+                    }
+                }
+                
+                reader.ReadEndDocument();
+                
+                if (!keySet)
+                    throw new BsonSerializationException("Missing key");
+                
+                if (!valueSet)
+                    throw new BsonSerializationException("Missing value");
+                
+                accumulator.Add((key, value));
+            }
+            
+            reader.ReadEndArray();
+            
+            return new Map<A, B>(accumulator);
         }
 
         public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, Map<A, B> value)
         {
-            var dict = new Dictionary<A, B>(value.ToDictionary());
-            _dictionarySerializer.Serialize(context, args, dict);
+            var writer = context.Writer;
+
+            var keySerializationArgs = ArgumentHelper.GetSpecificSerializationArgs(args);
+            var valueSerializationArgs = ArgumentHelper.GetSpecificSerializationArgs(args, 1);
+            
+            writer.WriteStartArray();
+            foreach (var (k,v) in value)
+            {
+                writer.WriteStartDocument();
+                writer.WriteName(Key);
+                _keySerializer.Serialize(context, keySerializationArgs, k);
+                writer.WriteName(Value);
+                _valueSerializer.Serialize(context, valueSerializationArgs, v);
+                writer.WriteEndDocument();
+            }   
+            
+            writer.WriteEndArray();
         }
 
-        public DictionaryRepresentation DictionaryRepresentation => _dictionarySerializer.DictionaryRepresentation;
-        public IBsonSerializer KeySerializer => _dictionarySerializer.KeySerializer;
-        public IBsonSerializer ValueSerializer => _dictionarySerializer.ValueSerializer;
+        public DictionaryRepresentation DictionaryRepresentation => DictionaryRepresentation.ArrayOfDocuments;
+        public IBsonSerializer KeySerializer => _keySerializer;
+        public IBsonSerializer ValueSerializer => _valueSerializer;
     }
 }

@@ -23,7 +23,7 @@ namespace LanguageExt.Bson.Serialization
             context.Reader.ReadStartDocument();
 
             var deserializationArgs = GetValueDeserializationArgs(args);
-            var values = new List<ValueTuple<string, A>>();
+            var accumulator = new List<ValueTuple<string, A>>();
 
             context.Reader.ReadBsonType();
             while (context.Reader.State != BsonReaderState.EndOfDocument)
@@ -31,13 +31,13 @@ namespace LanguageExt.Bson.Serialization
                 var name = context.Reader.ReadName();
                 var value = _valueSerializer.Deserialize(context, deserializationArgs);
 
-                values.Add((name, value));
+                accumulator.Add((name, value));
                 context.Reader.ReadBsonType();
             }
 
             context.Reader.ReadEndDocument();
 
-            return new Map<string, A>(values);
+            return new Map<string, A>(accumulator);
         }
 
         public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, Map<string, A> value)
