@@ -1,8 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageExt.Bson", "LanguageExt.Bson\LanguageExt.Bson.csproj", "{80D0E36C-27B7-4463-9E39-F3A029D45135}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageExt.Bson.Tests", "LanguageExt.Bson.Tests\LanguageExt.Bson.Tests.csproj", "{40787C63-7C59-4A42-AB96-7AFC5B848CBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageExt.Bson.DependencyInjection", "LanguageExt.Bson.DependencyInjection\LanguageExt.Bson.DependencyInjection.csproj", "{FBD06568-1CBC-44C4-ACBC-8FEA9AD1165D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80D0E36C-27B7-4463-9E39-F3A029D45135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80D0E36C-27B7-4463-9E39-F3A029D45135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80D0E36C-27B7-4463-9E39-F3A029D45135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80D0E36C-27B7-4463-9E39-F3A029D45135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40787C63-7C59-4A42-AB96-7AFC5B848CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40787C63-7C59-4A42-AB96-7AFC5B848CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40787C63-7C59-4A42-AB96-7AFC5B848CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40787C63-7C59-4A42-AB96-7AFC5B848CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBD06568-1CBC-44C4-ACBC-8FEA9AD1165D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBD06568-1CBC-44C4-ACBC-8FEA9AD1165D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBD06568-1CBC-44C4-ACBC-8FEA9AD1165D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBD06568-1CBC-44C4-ACBC-8FEA9AD1165D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
