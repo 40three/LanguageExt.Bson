@@ -13,7 +13,12 @@ namespace LanguageExt.Bson.Serialization
         public static BsonSerializationArgs GetSpecificSerializationArgs(BsonSerializationArgs deserializationArgs, int typeIndex = 0)
         {
             var itemType = deserializationArgs.NominalType.GetGenericArguments()[typeIndex];
-            return new BsonSerializationArgs { NominalType = itemType};
+            return new BsonSerializationArgs
+            {
+                NominalType = itemType,
+                SerializeIdFirst = deserializationArgs.SerializeIdFirst,
+                SerializeAsNominalType = deserializationArgs.SerializeAsNominalType
+            };
         }
     }
 }
