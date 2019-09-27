@@ -7,8 +7,8 @@ Nuget
 
 Package | Description
 --------|------------
-_LanguageExt.Bson_ | Provides the serializers
-_LanguageExt.Bson.DependencyInjection_ | Provides `IServiceCollection` extensions 
+**LanguageExt.Bson** | Provides the serializers
+**LanguageExt.Bson.DependencyInjection** | Provides `IServiceCollection` extensions 
 
 Setup
 -----
