@@ -2,10 +2,13 @@
 
 This library provides BSON-serializers for MongoDB.Bson for most LanguageExt containers.
 
-Packages:
+Nuget
+-----
 
-*LanguageExt.Bson* provides the serializers
-*LanguageExt.Bson.DependencyInjection* provides `IServiceCollection` extensions 
+Package | Description
+--------|------------
+_LanguageExt.Bson_ | Provides the serializers
+_LanguageExt.Bson.DependencyInjection_ | Provides `IServiceCollection` extensions 
 
 Setup
 -----
