@@ -26,19 +26,20 @@ namespace LanguageExt.Bson.Serialization
         /// <param name="args"></param>
         /// <returns></returns>
         public override A Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+            => CreateFromValues(EnumerateValues(context, args));
+
+
+        private IEnumerable<B> EnumerateValues(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
             var reader = context.Reader;
             reader.ReadStartArray();
-            var accumulator = new List<B>();
             var itemDeserializationArgs = GetItemDeserializationArgs(args);
             while (reader.ReadBsonType() != BsonType.EndOfDocument)
             {
-                var item = this._itemSerializer.Deserialize(context, itemDeserializationArgs);
-                accumulator.Add(item);
+                var item = _itemSerializer.Deserialize(context, itemDeserializationArgs);
+                yield return item;
             }
             reader.ReadEndArray();
-            
-            return CreateFromValues(accumulator);
         }
 
         public bool TryGetItemSerializationInfo(out BsonSerializationInfo serializationInfo)

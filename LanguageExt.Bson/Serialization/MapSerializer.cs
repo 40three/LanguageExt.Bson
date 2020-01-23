@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
@@ -9,7 +8,7 @@ using MongoDB.Bson.Serialization.Serializers;
 namespace LanguageExt.Bson.Serialization
 {
     /// <summary>
-    /// Serializes a Map<A,B> the same way we would serialize a dictionary
+    /// Serializes a Map{A,B} the same way we would serialize a dictionary
     /// </summary>
     /// <typeparam name="A"></typeparam>
     /// <typeparam name="B"></typeparam>
@@ -30,13 +29,14 @@ namespace LanguageExt.Bson.Serialization
         }
         
         public override Map<A, B> Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+            => new Map<A, B>(EnumerateTuples(context, args));
+        
+        private IEnumerable<(A,B)> EnumerateTuples(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
             var reader = context.Reader;
 
             var keyDeserializationArgs = ArgumentHelper.GetSpecificDeserializationArgs(args);
             var valueDeserializationArgs = ArgumentHelper.GetSpecificDeserializationArgs(args, 1);
-            
-            var accumulator = new List<ValueTuple<A,B>>();
             
             reader.ReadStartArray();
 
@@ -75,12 +75,10 @@ namespace LanguageExt.Bson.Serialization
                 if (!valueSet)
                     throw new BsonSerializationException("Missing value");
                 
-                accumulator.Add((key, value));
+                yield return (key, value);
             }
             
             reader.ReadEndArray();
-            
-            return new Map<A, B>(accumulator);
         }
 
         public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, Map<A, B> value)
