@@ -12,6 +12,11 @@ namespace LanguageExt.Bson.Serialization
             {
                 var genericTypeDefinition = type.GetGenericTypeDefinition();
 
+                if (genericTypeDefinition == typeof(Seq<>))
+                {
+                    return CreateGenericSerializer(typeof(SeqSerializer<>), type.GetGenericArguments(), registry);
+                }
+
                 if (genericTypeDefinition == typeof(Lst<>))
                 {
                     return CreateGenericSerializer(typeof(LstSerializer<>), type.GetGenericArguments(), registry);
