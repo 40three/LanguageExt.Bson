@@ -16,7 +16,7 @@
         <Description>IServiceCollection-Extension to initialize LanguageExt.Bson</Description>
         <PackageProjectUrl>https://github.com/40three/LanguageExt.Bson</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageVersion>0.2.1</PackageVersion>
+        <PackageVersion>0.3.0</PackageVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
