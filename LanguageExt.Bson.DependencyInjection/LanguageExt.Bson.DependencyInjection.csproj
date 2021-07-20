@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <LangVersion>8</LangVersion>
         <Nullable>warnings</Nullable>
 
@@ -16,6 +16,8 @@
         <Description>IServiceCollection-Extension to initialize LanguageExt.Bson</Description>
         <PackageProjectUrl>https://github.com/40three/LanguageExt.Bson</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageVersion>0.2.1</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
