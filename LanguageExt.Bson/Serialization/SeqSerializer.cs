@@ -8,7 +8,7 @@ namespace LanguageExt.Bson.Serialization
     /// </summary>
     /// <typeparam name="A"></typeparam>
     public class SeqSerializer<A> : AbstractEnumerableSerializer<Seq<A>, A> {
-        protected override Seq<A> CreateFromValues(IEnumerable<A> values) => new Seq<A>(values);
+        protected override Seq<A> CreateFromValues(IEnumerable<A> values) => new Seq<A>(values).Strict();
 
         public SeqSerializer(IBsonSerializerRegistry registry) : base(registry)
         {
