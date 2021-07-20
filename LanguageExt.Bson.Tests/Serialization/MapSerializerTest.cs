@@ -34,7 +34,7 @@ namespace LanguageExt.Bson.Serialization
                 };
                 yield return new object[] {Map<object, object>((Guid.Empty, 109)), new BsonArray
                 {
-                    new BsonDocument{ {"k", Guid.Empty}, {"v", 109}}
+                    new BsonDocument{ {"k", new BsonBinaryData(Guid.Empty, GuidRepresentation.CSharpLegacy)}, {"v", 109}}
                 }};
             }
         }
