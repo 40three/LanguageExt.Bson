@@ -43,6 +43,11 @@ namespace LanguageExt.Bson.Serialization
                     return CreateGenericSerializer(typeof(MapSerializer<,>), type.GetGenericArguments(), registry);
                 }
             }
+
+            if (type.IsSubclassOfGeneric(typeof(NewType<,,>), out var newType))
+            {
+                return CreateGenericSerializer(typeof(NewTypeSerializer<,,>), newType.GetGenericArguments(), registry);
+            }
             
             // fall back to default mongo serialization providers
             return null;
