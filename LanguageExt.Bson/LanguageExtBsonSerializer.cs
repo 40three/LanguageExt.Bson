@@ -22,6 +22,7 @@ namespace LanguageExt.Bson
                 if (!_bsonSerializationInitialized)
                 {
                     BsonSerializer.RegisterSerializationProvider(new LanguageExtCollectionSerializationProvider());
+                    BsonSerializer.RegisterSerializationProvider(new NewTypeSerializationProvider());
                     _bsonSerializationInitialized = true;
                 }
             }
